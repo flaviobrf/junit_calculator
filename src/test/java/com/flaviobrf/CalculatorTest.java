@@ -9,11 +9,15 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+@Order(2)
 @DisplayName("Tests for class calculator")
 class CalculatorTest {
 
@@ -37,6 +41,13 @@ class CalculatorTest {
 			calculator = new Calculator();
 			System.out.println("Executing before each test");
 		}
+		
+		@ParameterizedTest
+		@ValueSource( ints = {40, 41})
+		void valueSourceAnnotationTest( Integer age) {
+			System.out.println("the age is "+ age);
+		}
+		
 		// um padrao para identificar os testes é adicionar nomear conforme abaixo (eu
 		// nao
 //		vejo muito retornar o esperado explicito):
@@ -90,10 +101,10 @@ class CalculatorTest {
 		@DisplayName("Parameterized Subtraction")
 		@ParameterizedTest
 		//@MethodSource("inputSubtractionParameters")
-//		@CsvSource({"100, 50, 50", 
-//			"12, 8, 4",
-//			"10,2,8"})
-		@CsvFileSource(resources =  "/subtractionValues.csv", numLinesToSkip = 1)
+		@CsvSource({"100, 50, 50", 
+			"12, 8, 4",
+			"10,2,8"})
+//		@CsvFileSource(resources =  "/subtractionValues.csv", numLinesToSkip = 1)
 		void ParameterizedIntegerSubtraction(int minuend, int subtrahend, int expected) {
 			
 			int actual = calculator.integerSubtraction(minuend, subtrahend);
